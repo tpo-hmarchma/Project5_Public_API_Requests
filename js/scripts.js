@@ -6,27 +6,32 @@
 
 fetch('https://randomuser.me/api/?nat=us&results=12')
   .then(response => response.json())
-  .then(data => generateGallery(data.results))
+  .then(data => generateDirectory(data.results))
   .catch(err => console.log('Error fetching employees:', err));
 
 /**
  * Directory displays 12 random users with image, first name, last name, email, and location
 */
-function generateGallery (data) {
+function generateDirectory (data) {
   for (i=0; i < data.length; i++) {
     let employee = data[i];
-    const galleryCard = `
+    const directoryItem = `
     <div class="card">
      <div class="card-img-container">
      <img class="card-img" src=${employee.picture.thumbnail} alt="profile picture">
-    </div>`;
-    const galleryContainer = `
+    </div>
     <div class="card-info-container">
      <h3 id="name" class="card-name cap">${employee.name.first} ${employee.name.last}</h3>
      <p class="card-text">${employee.email}</p>
-     <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
+     <p class="card-text cap">${employee.location.city}</p>
     </div>
     </div>`;
-    document.querySelector('#gallery').insertAdjacentHTML('beforeend', galleryCard + galleryContainer);
+    document.querySelector('#gallery').insertAdjacentHTML('beforeend', directoryItem);
   }
 }
+
+/**
+ * Modal window pops up when directory item is clicked
+ * Modal window includes: image, name, email, location, cell number, detailed address, birthday
+ * Moday window can be closed
+ */
