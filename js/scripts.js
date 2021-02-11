@@ -58,6 +58,11 @@ function generateDirectory (data) {
  * Moday window can be closed
  */
 
+// Event Listener to open modal window when directory card is clicked
+document.querySelectorAll('.card').addEventListener('click', (e) => {
+  document.querySelector('.modal-container').style.display = 'block';
+});
+
 // Event Listener to close modal window when close button is clicked
 document.querySelector('#modal-close-btn').addEventListener('click', (e) => {
   document.querySelector('.modal-container').style.display = 'none';
