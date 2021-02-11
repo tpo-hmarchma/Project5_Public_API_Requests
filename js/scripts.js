@@ -1,24 +1,6 @@
 //TODO:
 //Remove modal buttons for exceeds if I don't go for exceeds
 
-//Global Variables
-// modalWindow is a blank modal window
-const modalWindow = `
-   <div class="modal-container">
-        <div class="modal">
-            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>    
-        </div>
-        <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
-        </div>
-   `;
-
-// Initial load specifications
-// Create blank modal window and then hide it at start up
-document.querySelector('body').insertAdjacentHTML('afterend', modalWindow);
-document.querySelector('.modal-container').style.display = 'none';
 
 /**
  * Request 12 random users from the API in a single request
@@ -58,21 +40,21 @@ function generateDirectory (data) {
  * Moday window can be closed
  */
 
-// function createModal creates a blank modal window with formatting
-// function createModal () {
-  // const modalWindow = `
-  //  <div class="modal-container">
-  //       <div class="modal">
-  //           <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>    
-  //       </div>
-  //       <div class="modal-btn-container">
-  //           <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-  //           <button type="button" id="modal-next" class="modal-next btn">Next</button>
-  //       </div>
-  //       </div>
-  //  `;
-  // document.querySelector('body').insertAdjacentHTML('afterend', modalWindow);
-// }
+function createModal creates a blank modal window with formatting
+function createModal () {
+  const modalWindow = `
+   <div class="modal-container">
+        <div class="modal">
+            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>    
+        </div>
+        <div class="modal-btn-container">
+            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+        </div>
+        </div>
+   `;
+  document.querySelector('body').insertAdjacentHTML('afterend', modalWindow);
+}
 
 // Event Listener to close modal window when close button is clicked
 document.querySelector('#modal-close-btn').addEventListener('click', (e) => {
