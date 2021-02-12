@@ -1,6 +1,3 @@
-   //TODO:
-    //Remove modal buttons for exceeds if I don't go for exceeds
-
 /**
  * Request 12 random users from the API in a single request
  * Specified nationality in request in order to make formatting easier in later steps
@@ -8,10 +5,9 @@
 */
 
 // Global variables
-
 // Variable for address of API with specific results requested
 const randomUsersUrl = 'https://randomuser.me/api/?nat=us&results=12';
-// Blank array to add results to
+// Blank array to add random user results to
 let employeeArray = [];
 
 async function getRandomEmployees (url) {
@@ -57,7 +53,7 @@ function generateDirectory (data) {
  * Moday window can be closed
  */
 
-// createModal creates a blank modal window with formatting
+// createModal creates a blank modal window with basic formatting
 function createModal () {
   const modal = document.createElement('div');
   modal.className = 'modal-container';
@@ -66,11 +62,7 @@ function createModal () {
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
       </div>
-  </div>
-        <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>`;
+  </div>`;
   // blank modal window is added to the DOM and then hidden
   modal.style.display = 'none';
   document.body.appendChild(modal);
@@ -102,7 +94,7 @@ function setModalContent (id) {
   let dob = employeeArray[id].dob.date.slice(0, 10);
   // split dob string into an array of YYYY, MM, DD
   let dobArray =dob.split('-');
-  // split cell string into array for proper formatting
+  // split cell string into array for proper formatting for cell phone number
   let cellArray = employeeArray[id].cell.split('-');
   let modalCardInfo =
         `<img class="modal-img" src=${employeeArray[id].picture.large} alt="profile picture">
@@ -115,9 +107,4 @@ function setModalContent (id) {
         <p class="modal-text">Birthday: ${dobArray[1]}/${dobArray[2]}/${dobArray[0]}</p>
         `;
   modalInfoContainer.insertAdjacentHTML('afterbegin', modalCardInfo);
-  // if (id <= 0) {
-  //   document.getElementById('modal-prev').disabled = true;
-  // } else {
-  //   document.getElementById('modal-prev').disabled = false;
-  // }
 }

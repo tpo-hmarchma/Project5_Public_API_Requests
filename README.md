@@ -1,1 +1,2 @@
 # Project5_Public_API_Requests
+Using a random user generator, this project grabs information for 12 random employees and displays it in cards on the page. When a card is clicked a modal window opens with additional employee information. 
