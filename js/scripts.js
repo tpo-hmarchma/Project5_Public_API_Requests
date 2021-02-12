@@ -89,7 +89,6 @@ function generateModalCards () {
     card.addEventListener('click', (e) => {
       document.querySelector('.modal-container').style.display = 'block';
       selectedCard = e.currentTarget;
-      console.log(selectedCard.id);
       setModalContent(selectedCard.id);
     });
   });
@@ -101,15 +100,17 @@ function setModalContent (id) {
   modalInfoContainer.innerHTML = '';
   // extract the first 10 digits of the dob string to format a dob
   let dob = employeeArray[id].dob.date.slice(0, 10);
-  // split dob string into an arry of YYYY, MM, DD
+  // split dob string into an array of YYYY, MM, DD
   let dobArray =dob.split('-');
+  // split cell string into array for proper formatting
+  let cellArray = employeeArray[id].cell.split('-');
   let modalCardInfo =
         `<img class="modal-img" src=${employeeArray[id].picture.large} alt="profile picture">
         <h3 id="name" class="modal-name cap">${employeeArray[id].name.first} ${employeeArray[id].name.last}</h3>
         <p class="modal-text">${employeeArray[id].email}</p>
         <p class="modal-text cap">${employeeArray[id].location.city}</p>
         <hr>
-        <p class="modal-text">${employeeArray[id].cell}</p>
+        <p class="modal-text">${cellArray[0]} ${cellArray[1]}-${cellArray[2]}</p>
         <p class="modal-text">${employeeArray[id].location.street.number} ${employeeArray[id].location.street.name} ${employeeArray[id].location.city}, ${employeeArray[id].location.state} ${employeeArray[id].location.postcode}</p>
         <p class="modal-text">Birthday: ${dobArray[1]}/${dobArray[2]}/${dobArray[0]}</p>
         `;
