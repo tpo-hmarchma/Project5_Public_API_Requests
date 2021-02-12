@@ -6,16 +6,27 @@
  * Specified nationality in request in order to make formatting easier in later steps
  * New random employee information displays each time page refreshes
 */
-//put in a function
-fetch('https://randomuser.me/api/?nat=us&results=12')
-  .then(response => response.json())
+
+// Global variables
+
+// Variable for address of API with specific results requested
+const randomUsersUrl = 'https://randomuser.me/api/?nat=us&results=12';
+
+async function getRandomEmployees (url) {
+  const getRandomEmployeesResponse = await fetch(url);
+  const getRandomEmployeesJSON = await getRandomEmployeesResponse.json();
+  return getRandomEmployeesJSON;
+}
+
+getRandomEmployees(randomUsersUrl)
   .then(data => generateDirectory(data.results))
+  .then(() => generateModalCards())
   .catch(err => console.log('Error fetching employees:', err));
 
 /**
  * Directory displays 12 random users with image, first name, last name, email, and location
 */
-
+// generateDirectory maps over the returned employee data and creates directory cards for each employee
 function generateDirectory (data) {
   let directory = data.map(employee =>
     `<div class="card">
@@ -29,7 +40,10 @@ function generateDirectory (data) {
      </div>
      </div>
     `).join('');
+  // directory is added to the DOM
   document.querySelector('#gallery').insertAdjacentHTML('beforeend', directory);
+  // Call the createModal function to create the blank hidden modal window
+  createModal();
 }
 
 /**
@@ -38,13 +52,15 @@ function generateDirectory (data) {
  * Moday window can be closed
  */
 
-// function createModal creates a blank modal window with formatting
+// createModal creates a blank modal window with formatting
 function createModal () {
   const modalWindow = `
-   <div class="modal-container">
-        <div class="modal">
-            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>    
-        </div>
+  <div class="modal-container">
+  <div class="modal">
+      <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+      <div class="modal-info-container">
+      </div>
+  </div>
         <div class="modal-btn-container">
             <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
@@ -60,25 +76,34 @@ function createModal () {
   });
 }
 
-// Event Listener to open modal window when directory card is clicked
-//AM currently trying to add listener before cards are created - FIX THIS
-document.querySelectorAll('.card').addEventListener('click', (e) => {
-  document.querySelector('.modal-container').style.display = 'block';
-});
+// generateModalCards targets all cards and adds an event listener to open modal windo when card is clicked
+function generateModalCards () {
+  const directoryCards = document.querySelectorAll('.card');
+  directoryCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      document.querySelector('.modal-container').style.display = 'block';
+    });
+  });
+}
+// document.querySelector('.card').addEventListener('click', (e) => {
+//     document.querySelector('.modal-container').style.display = 'block';
+//     let person = e.target;
+//     generateModalData();
+//   });
 
 // function generateModalData to take employee data and add it to blank modal window
-// maybe do this with e.target? would that work
-function generateModalData (data) {
-  const modalData = `
-   <div class="modal-info-container">
-    <img class="modal-img" src=${employee.picture.thumbnail} alt="profile picture">
+function setModalContent (data) {
+  const modalInfoContainer = document.querySelector('.modal-info-container');
+  modalInfoContainer.innerHTML = '';
+  let modalCardInfo = 
+    `<img class="modal-img" src=${employee.picture.large} alt="profile picture">
     <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
     <p class="modal-text">${employee.email}</p>
     <p class="modal-text cap">${employee.location.city}</p>
     <hr>
     <p class="modal-text">${employee.phone}</p>
     <p class="modal-text">${employee.location.street} ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-    <p class="modal-text">Birthday: ${employee.dob}</p>
-   </div>
+    <p class="modal-text">Birthday: ${employee.dob.date}</p>
   `;
+  modalInfoContainer.insertAdjacentHTML('afterbegin', modalCardInfo);
 }
