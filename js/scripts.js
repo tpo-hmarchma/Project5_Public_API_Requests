@@ -28,7 +28,7 @@ getRandomEmployees(randomUsersUrl)
 */
 // generateDirectory maps over the returned employee data and creates directory cards for each employee
 function generateDirectory (data) {
-  let directory = data.map(employee =>
+  let directory = data.map((employee, index) =>
     `<div class="card">
       <div class="card-img-container">
       <img class="card-img" src=${employee.picture.thumbnail} alt="profile picture">
@@ -82,21 +82,24 @@ function generateModalCards () {
   directoryCards.forEach(card => {
     card.addEventListener('click', (e) => {
       document.querySelector('.modal-container').style.display = 'block';
+      // let person = e.currentTarget.index;
+      console.log(e.target.index);
+      // console.log(person);
     });
   });
 }
-// document.querySelector('.card').addEventListener('click', (e) => {
-//     document.querySelector('.modal-container').style.display = 'block';
-//     let person = e.target;
-//     generateModalData();
-//   });
 
-// function generateModalData to take employee data and add it to blank modal window
-function setModalContent (data) {
+// let person = e.Target, and then get the card-text (which is the email), and use that to get the info?
+// maybe go back and put all info in an array?
+
+
+// function setModalData to take employee data and add it to blank modal window
+function setModalContent (employee, data, index) {
   const modalInfoContainer = document.querySelector('.modal-info-container');
   modalInfoContainer.innerHTML = '';
   let modalCardInfo = 
-    `<img class="modal-img" src=${employee.picture.large} alt="profile picture">
+    `
+    <img class="modal-img" src=${employee.picture.large} alt="profile picture">
     <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
     <p class="modal-text">${employee.email}</p>
     <p class="modal-text cap">${employee.location.city}</p>
