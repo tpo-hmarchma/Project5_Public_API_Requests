@@ -29,7 +29,7 @@ getRandomEmployees(randomUsersUrl)
 */
 // generateDirectory maps over the returned employee data and creates directory cards for each employee
 function generateDirectory (data) {
-  let directory = data.map((employee, index) =>
+  const directory = data.map((employee, index) =>
     `<div class="card" id="${index}">
       <div class="card-img-container">
       <img class="card-img" src=${employee.picture.thumbnail} alt="profile picture">
@@ -91,12 +91,12 @@ function setModalContent (id) {
   const modalInfoContainer = document.querySelector('.modal-info-container');
   modalInfoContainer.innerHTML = '';
   // extract the first 10 digits of the dob string to format a dob
-  let dob = employeeArray[id].dob.date.slice(0, 10);
+  const dob = employeeArray[id].dob.date.slice(0, 10);
   // split dob string into an array of YYYY, MM, DD
-  let dobArray =dob.split('-');
+  const dobArray = dob.split('-');
   // split cell string into array for proper formatting for cell phone number
-  let cellArray = employeeArray[id].cell.split('-');
-  let modalCardInfo =
+  const cellArray = employeeArray[id].cell.split('-');
+  const modalCardInfo =
         `<img class="modal-img" src=${employeeArray[id].picture.large} alt="profile picture">
         <h3 id="name" class="modal-name cap">${employeeArray[id].name.first} ${employeeArray[id].name.last}</h3>
         <p class="modal-text">${employeeArray[id].email}</p>
