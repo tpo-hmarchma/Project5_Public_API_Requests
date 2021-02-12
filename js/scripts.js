@@ -59,8 +59,8 @@ function generateDirectory (data) {
 
 // createModal creates a blank modal window with formatting
 function createModal () {
-  const modalWindow = `
-  <div class="modal-container">
+  const modalWindow =
+  `<div class="modal-container">
   <div class="modal">
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
@@ -70,8 +70,7 @@ function createModal () {
             <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
         </div>
-        </div>
-   `;
+  </div>`;
   // blank modal window is added to the DOM and then hidden
   document.querySelector('body').insertAdjacentHTML('afterend', modalWindow);
   document.querySelector('.modal-container').style.display = 'none';
@@ -100,16 +99,24 @@ function generateModalCards () {
 function setModalContent (id) {
   const modalInfoContainer = document.querySelector('.modal-info-container');
   modalInfoContainer.innerHTML = '';
-  let modalCardInfo = 
-  `
-  <img class="modal-img" src=${employeeArray[id].picture.large} alt="profile picture">
-  <h3 id="name" class="modal-name cap">${employeeArray[id].name.first} ${employeeArray[id].name.last}</h3>
-  <p class="modal-text">${employeeArray[id].email}</p>
-  <p class="modal-text cap">${employeeArray[id].location.city}</p>
-  <hr>
-  <p class="modal-text">${employeeArray[id].phone}</p>
-  <p class="modal-text">${employeeArray[id].location.street} ${employeeArray[id].location.city}, ${employeeArray[id].location.state} ${employeeArray[id].location.postcode}</p>
-  <p class="modal-text">Birthday: ${employeeArray[id].dob.date}</p>
-  `;
+  // extract the first 10 digits of the dob string to format a dob
+  let dob = employeeArray[id].dob.date.slice(0, 10);
+  // split dob string into an arry of YYYY, MM, DD
+  let dobArray =dob.split('-');
+  let modalCardInfo =
+        `<img class="modal-img" src=${employeeArray[id].picture.large} alt="profile picture">
+        <h3 id="name" class="modal-name cap">${employeeArray[id].name.first} ${employeeArray[id].name.last}</h3>
+        <p class="modal-text">${employeeArray[id].email}</p>
+        <p class="modal-text cap">${employeeArray[id].location.city}</p>
+        <hr>
+        <p class="modal-text">${employeeArray[id].cell}</p>
+        <p class="modal-text">${employeeArray[id].location.street.number} ${employeeArray[id].location.street.name} ${employeeArray[id].location.city}, ${employeeArray[id].location.state} ${employeeArray[id].location.postcode}</p>
+        <p class="modal-text">Birthday: ${dobArray[1]}/${dobArray[2]}/${dobArray[0]}</p>
+        `;
   modalInfoContainer.insertAdjacentHTML('afterbegin', modalCardInfo);
-  }
+  // if (id <= 0) {
+  //   document.getElementById('modal-prev').disabled = true;
+  // } else {
+  //   document.getElementById('modal-prev').disabled = false;
+  // }
+}
