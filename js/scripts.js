@@ -59,9 +59,10 @@ function generateDirectory (data) {
 
 // createModal creates a blank modal window with formatting
 function createModal () {
-  const modalWindow =
-  `<div class="modal-container">
-  <div class="modal">
+  const modal = document.createElement('div');
+  modal.className = 'modal-container';
+  modal.innerHTML =
+  `<div class="modal">
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
       </div>
@@ -69,11 +70,10 @@ function createModal () {
         <div class="modal-btn-container">
             <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
-  </div>`;
+        </div>`;
   // blank modal window is added to the DOM and then hidden
-  document.querySelector('body').insertAdjacentHTML('afterend', modalWindow);
-  document.querySelector('.modal-container').style.display = 'none';
+  modal.style.display = 'none';
+  document.body.appendChild(modal);
   // Event Listener added to close modal window when close button is clicked
   document.querySelector('#modal-close-btn').addEventListener('click', (e) => {
     document.querySelector('.modal-container').style.display = 'none';
